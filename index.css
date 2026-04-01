@@ -1,0 +1,112 @@
+/* Documentation: I used https://www.w3schools.com/cssref/pr_grid.php */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* page structure */
+.page {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* layout */
+.top {
+    display: grid;
+    grid-template-columns: 14rem 1fr 10rem;
+    border-bottom: 0.125rem solid black;
+    /* pushes footer down */
+    flex: 1; 
+}
+
+/* left */
+.sidebar {
+    border-right: 0.125rem solid black;
+    padding: 1em;
+}
+
+/* keeps department list buttons blue */
+.sidebar a:link,
+.sidebar a:visited {
+    color: blue;
+}
+
+.logo {
+    width: 3em;
+    margin-bottom: 1em;
+}
+
+.departments-title {
+    font-weight: bold;
+}
+
+/* center */
+.header-title {
+    text-align: center;
+    padding: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* align to top instead of center */
+    justify-content: flex-start;
+}
+
+.header-title h1 {
+    /* aligns with logo/about */
+    margin-top: 0.5rem;
+    /* pushes search down */
+    margin-bottom: 6rem;
+}
+
+/* search */
+.search-bar input {
+    width: 20em;
+    padding: 0.5em;
+    border: 0.1em solid black;
+}
+
+/* right */
+.top-links {
+    padding: 1em;
+    border-left: 0.125rem solid black;
+
+    display: flex;
+    /* horizontal center */
+    justify-content: center;
+    /* align to top */
+    align-items: flex-start;
+}
+
+/* keeps about button blue */
+.top-links a:link,
+.top-links a:visited {
+    color: blue;
+}
+
+/* bottom */
+.footer {
+    text-align: center;
+    padding: 1em;
+    border-top: 0.125rem solid black;
+}
+
+/* keeps contact button blue */
+.footer a:link,
+.footer a:visited {
+    color: blue;
+}
+
+/* about page elements added */
+.about-content h1 {
+    margin-top: 0.5rem;
+    margin-bottom: 4rem;
+}
+
+.bio-paragraph {
+    width: 70%;
+    text-align: left;
+    font-size: 1.1rem;
+    line-height: 1.5;
+}

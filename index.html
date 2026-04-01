@@ -1,0 +1,64 @@
+<!--Documentation: I used https://www.w3schools.com/html/html_forms.asp to learn 
+how to make an HTML form -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Rate My Academy</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <div class="page">
+
+    <!-- TOP SECTION -->
+    <div class="top">
+
+        <!-- SIDEBAR (LEFT) -->
+        <div class="sidebar">
+            <!-- button to reload main page -->
+            <a href="index.html">
+                <img src="AF.jpg" alt="USAFA Logo" class="logo">
+            </a>
+
+            <!-- department list -->
+            <p class="departments-title">Department List</p>
+            <p><a href="search.html?query=Aero">Aero</a></p>
+            <p><a href="search.html?query=Astro">Astro</a></p>
+            <p><a href="search.html?query=BehSci">Beh Sci</a></p>
+            <p><a href="search.html?query=CS">CS</a></p>
+            <p><a href="search.html?query=Math">Math</a></p>
+        </div>
+
+        <!-- CENTER -->
+        <div class="header-title">
+            <h1>Rate My Academy</h1>
+
+            <form class="search-bar" action="search.html" method="get">
+            <input
+                type="text"
+                name="query"
+                placeholder="Search by Department, Class, or Instructor..."
+            >
+            </form>
+        </div>
+
+        <!-- TOP RIGHT -->
+        <!-- button to About page -->
+        <div class="top-links">
+            <a href="about.html">About</a>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <!-- button to Contact page -->
+        <a href="contact.html">Contact Us</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
