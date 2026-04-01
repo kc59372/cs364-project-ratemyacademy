@@ -2,9 +2,9 @@
 A database-driven web application that helps USAFA cadets evaluate courses and professors through peer reviews.
 
 ## Contributors
-Hannah Davis
-Will Lockhart
-Kaci McBrayer
+- Hannah Davis
+- Will Lockhart
+- Kaci McBrayer
 
 ## Features
 - Search by course, professor, or department  
