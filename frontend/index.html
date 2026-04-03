@@ -23,25 +23,51 @@ how to make an HTML form -->
             </a>
 
             <!-- department list -->
-            <p class="departments-title">Department List</p>
-            <p><a href="search.html?query=Aero">Aero</a></p>
-            <p><a href="search.html?query=Astro">Astro</a></p>
-            <p><a href="search.html?query=BehSci">Beh Sci</a></p>
-            <p><a href="search.html?query=CS">CS</a></p>
-            <p><a href="search.html?query=Math">Math</a></p>
+            <div class="departments">
+                <p class="departments-title">Department List</p>
+                <form action="/search" method="post">
+                    <button type="submit" name="query" value="Aero">Aero</button>
+                </form>
+                <form action="/search" method="post">
+                    <button type="submit" name="query" value="Astro">Astro</button>
+                </form>
+                <form action="/search" method="post">
+                    <button type="submit" name="query" value="BehSci">Beh Sci</button>
+                </form>
+                <form action="/search" method="post">
+                    <button type="submit" name="query" value="CS">CS</button>
+                </form>
+                <form action="/search" method="post">
+                    <button type="submit" name="query" value="Math">Math</button>
+                </form>
+            </div>
         </div>
 
         <!-- CENTER -->
         <div class="header-title">
             <h1>Rate My Academy</h1>
 
-            <form class="search-bar" action="search.html" method="get">
+            <form class="search-bar" action="/search" method="post">
             <input
                 type="text"
                 name="query"
                 placeholder="Search by Department, Class, or Instructor..."
             >
             </form>
+
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+            <p>test</p>
+
         </div>
 
         <!-- TOP RIGHT -->
@@ -60,5 +86,11 @@ how to make an HTML form -->
 
   </div>
 
+<!-- Documentation: https://www.w3schools.com/js/js_htmldom_eventlistener.asp -->
+<script>
+    window.addEventListener("pageshow", function () {
+        document.querySelector(".search-bar input").value = "";
+    });
+</script>
 </body>
 </html>
