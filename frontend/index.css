@@ -69,6 +69,17 @@ h1, h2, h3 {
     box-shadow: 0 0 0 2px rgba(11, 61, 145, 0.1);
 }
 
+.login input {
+    width: 100%;
+    max-width: 500px;
+    padding: 12px;
+    margin-top: 10px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    transition: 0.2s ease;
+}
+
 /* TOP RIGHT */
 .top-links {
     padding: 20px;
