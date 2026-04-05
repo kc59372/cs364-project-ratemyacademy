@@ -1,0 +1,22 @@
+/* RESPONSIVE STYLESHEET */
+@media (max-width: 800px) {
+    .top {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        width: 100%;
+        flex-direction: row;
+        overflow-x: auto;
+    }
+
+    .sidebar button {
+        margin-right: 8px;
+        white-space: nowrap;
+    }
+
+    .card,
+    .contact-card {
+        width: 100%;
+    }
+}

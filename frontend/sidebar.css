@@ -1,0 +1,75 @@
+/* SIDEBAR STYLESHEET */
+.sidebar {
+    width: 200px;
+    background-color: #0b3d91;
+    color: white;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo {
+    width: 120px;  
+    margin-bottom: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto; 
+    transition: transform 0.2s ease;
+}
+
+.logo:hover {
+    transform: scale(1.08);
+}
+
+.departments-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+    opacity: 0.8;
+    letter-spacing: 1px;
+}
+
+.sidebar form {
+    margin: 0;
+}
+
+.sidebar button {
+    width: 100%;
+    margin-bottom: 8px;
+    padding: 10px;
+    border: none;
+    border-radius: 6px;
+    background-color: white;
+    color: #0b3d91;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.sidebar button:hover {
+    background-color: #dbe6ff;
+    transform: translateX(3px);
+}
+
+.sidebar p {
+    margin: 0 0 8px;
+}
+
+.sidebar p a {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    background-color: white;
+    color: #0b3d91;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.sidebar p a:hover {
+    background-color: #dbe6ff;
+    transform: translateX(3px);
+}

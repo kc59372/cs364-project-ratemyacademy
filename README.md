@@ -20,4 +20,6 @@ A database-driven web application that helps USAFA cadets evaluate courses and p
 Deliver a fully functional system with a user-friendly interface and real-world data.
 
 ## Documentation
-Hannah used https://www.w3schools.com/cssref/pr_grid.php to help with index.css and https://www.w3schools.com/html/html_forms.asp to learn how to make an HTML form for index.html.
+We used https://www.w3schools.com/cssref/pr_grid.php as a reference for the css files, https://www.w3schools.com/html/html_forms.asp to learn how to make an HTML form, and
+https://www.w3schools.com/js/js_htmldom_eventlistener.asp to add a listener for the 
+search button.

@@ -1,0 +1,61 @@
+/* CARDS STYLESHEET */
+.reviews-section {
+    max-width: 760px;
+    margin-top: 20px;
+}
+
+.reviews-section h2 {
+    margin: 0 0 16px;
+    font-size: 24px;
+    font-weight: 700;
+}
+
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 16px;
+    width: 220px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.card-subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.card-meta {
+    display: flex;
+    gap: 12px;
+    font-size: 13px;
+    color: #667085;
+    margin-bottom: 14px;
+}
+
+.card-meta span {
+    display: inline-block;
+}
+
+.card-text {
+    font-size: 14px;
+    line-height: 1.5;
+}
