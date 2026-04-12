@@ -1,33 +1,97 @@
+//file: server.js
+// USAFA CS 364 
+// Lesson 27 Authentication example
+ 
 const express = require("express");
+const crypto = require('crypto');
+const session = require("express-session");
+const pool = require('./db');
+const auth = require("./auth");
+require("dotenv").config();
 
 const app = express();
 
-// for using post rather than get in searches
-// Documentation: https://www.geeksforgeeks.org/web-tech/express-js-app-post-function/
-app.use(express.static("frontend"));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
-app.post("/search", (req, res) => {
-   const query = req.body.query;
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false} // would be set to true if using HTTPS
+  })
+);
 
-   res.send(query);
+// Route handler for GET /
+app.get('/', (req, res) => {
+  const currentTime = new Date().toString();
+  res.send(`Current server time: ${currentTime}`);
+});
+
+// Route handler for GET /api/
+app.get('/api/', (req, res) => {
+  const currentTime = new Date().toString();
+  res.send(`Current API time: ${currentTime}`);
+});
+
+
+// app.post("/api/register", auth.register);
+
+const saltRounds = 10;
+
+
+app.post("/api/register", async (req, res) => {
+
+  console.log("server.js: register ");
+  const { username, email, password, role } = req.body;
+
+  console.log(`server.js: register username: ${username}`);
+  console.log(`server.js: register email: ${email}`);
+  console.log(`server.js: register password: ${password}`);
+  console.log(`server.js: register role: ${role}`);
+
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+
+  const query = 'INSERT INTO users (username, email, hash, salt, role) VALUES ($1, $2, $3, $4, $5) RETURNING id';
+
+  const values = [username, email, hash, salt, role];
+  console.log("trying query with these values...");
+  console.log(values);
+
+  try {
+    const result = await pool.query(query, values);
+    console.log("user NOW registered ... going to respond");
+    console.log(result);
+    res.json({ success: true, message: `${role} account created`, username: `${username}` }); 
+  } catch (error) {
+    console.log("in catch block of server.js/register");
+    console.log(error);
+    res.json({ success: false, message: 'Username or email already exists.' });
+  }
+});
+
+
+app.post("/api/login", auth.login);
+
+app.get("/api/users", auth.ensureAdmin, async (req, res) => {
+  console.log("in GET /users");
+  const result = await pool.query("SELECT username, email, role FROM users");
+  console.log(`GET /users rows: ${result.rows}`);
+  res.json(result.rows);
+});
+
+app.get("/api/logout", (req, res) => {
+  req.session.destroy();
+  res.json({ message: "Logged out" });
 });
 
 app.get("/api/session", (req, res) => {
-if (req.session.user) {
-res.json({ loggedIn: true, user: req.session.user });
-} else {
-res.json({ loggedIn: false });
-}
+    if (req.session.user) {
+        res.json({ loggedIn: true, user: req.session.user });
+    } else {
+        res.json({ loggedIn: false });
+    }
 });
 
-app.post("/api/register", async (req, res) => {
-const { username, email, password, role } = req.body;
-const salt = crypto.randomBytes(16).toString("hex");
-const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
-const query = 'INSERT INTO users (username, email, hash, salt, role) VALUES ($1, $2, $3, $4, $5) RETURNING
-}); // error checking follows
-
-app.listen(3000, () => {
-   console.log("Node server running");
-});
+app.listen(3000, () => console.log("Server running on port 3000"));

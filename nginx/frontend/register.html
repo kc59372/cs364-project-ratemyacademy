@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script defer src="register.js"> </script>
+    <script defer src="loadnavbar.js"> </script>
+    <script defer src="loginStatus.js"> </script>
+    <link rel="stylesheet" href="website.css">
+</head>
+
+<body>
+      <nav class="navbar"> <div id="navbar-placeholder"> nav bar placeholder </div> </nav>
+      <form id="register-form" onsubmit="register(event)">
+      <fieldset>
+      <legend>R Form</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="username" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <br>
+
+        <button type="submit">Register</button>
+      </fieldset>
+    </form>
+    <hr>
+</body>
+</html>
+

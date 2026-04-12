@@ -1,0 +1,47 @@
+//file: makeUsers.js
+
+// used to create user table entries 
+ 
+const crypto = require('crypto');
+
+const saltRounds = 10;
+
+const fakeUsers = 
+   [
+      {
+         username: "user1",
+         email: "user1@gmail.com",
+         password: "aaa",
+         role: "user"
+      },
+      {
+         username: "admin1",
+         email: "admin1@gmail.com",
+         password: "aaa",
+         role: "admin"
+      }
+   ];
+
+function makeFakeUsers(){
+  fakeUsers.forEach(makeFakeUser);
+}
+
+function makeFakeUser(user){
+
+  const { username, email, password, role } = user;
+
+  console.log(`-- username: ${username}`);
+  //  console.log(`--    email: ${email}`);
+  console.log(`-- password: ${password}`);
+  console.log(`--     role: ${role}`);
+
+  const salt = crypto.randomBytes(16).toString("hex");
+  const hash = crypto.pbkdf2Sync(password, salt, 1000, 64, "sha512").toString("hex");
+
+  //  console.log(`--     salt: ${salt}`);
+  //  console.log(`--     hash: ${hash}`);
+  console.log(`INSERT INTO users (username, email, hash, salt, role) VALUES ('${username}', '${email}', '${hash}', '${salt}', '${role}');`);
+  console.log('');
+}
+
+makeFakeUsers();
