@@ -94,4 +94,36 @@ app.get("/api/session", (req, res) => {
     }
 });
 
+app.post("/api/reviews", async (req, res) => {
+  console.log("in POST /api/reviews");
+  
+  if (!req.session.user) {
+    return res.status(401).json({ success: false, message: 'Not logged in' });
+  }
+
+  const { rating, comment, section_id } = req.body;
+  const user_id = req.session.user.id;
+  const creation_date = new Date().toLocaleDateString('en-US');
+
+  if (!rating || !comment || !section_id) {
+    return res.status(400).json({ success: false, message: 'Missing required fields' });
+  }
+
+  try {
+    // Get the next review_id
+    const maxResult = await pool.query("SELECT COALESCE(MAX(review_id), 0) as max_id FROM review");
+    const next_review_id = maxResult.rows[0].max_id + 1;
+
+    const query = 'INSERT INTO review (review_id, rating, comment, creation_date, user_id, section_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING review_id';
+    const values = [next_review_id, rating, comment, creation_date, user_id, section_id];
+
+    const result = await pool.query(query, values);
+    console.log("Review created:", result.rows[0]);
+    res.json({ success: true, message: 'Review created', review_id: result.rows[0].review_id });
+  } catch (error) {
+    console.log("Error creating review:", error);
+    res.status(500).json({ success: false, message: 'Error creating review' });
+  }
+});
+
 app.listen(3000, () => console.log("Server running on port 3000"));

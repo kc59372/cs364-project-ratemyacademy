@@ -1,6 +1,6 @@
 services:
   nginx:
-    container_name: L27_web
+    container_name: web
     image: nginx:alpine
     ports:
       - "80:80"
@@ -14,7 +14,7 @@ services:
 
   backend:
     build: ./backend
-    container_name: L27_api
+    container_name: api
     ports:
       - "3000:3000"
     env_file:
@@ -28,7 +28,7 @@ services:
 
   db:
     image: postgres:latest
-    container_name: L27_db
+    container_name: db
     env_file:
       - .env  # load same environment variables
     volumes:
