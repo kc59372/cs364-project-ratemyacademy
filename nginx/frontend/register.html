@@ -1,43 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
     <title>Register</title>
-    <script defer src="register.js"> </script>
-    <script defer src="loadnavbar.js"> </script>
-    <script defer src="loginStatus.js"> </script>
-    <link rel="stylesheet" href="website.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="sidebar.css">
+    <link rel="stylesheet" href="cards.css">
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body>
-      <nav class="navbar"> <div id="navbar-placeholder"> nav bar placeholder </div> </nav>
-      <form id="register-form" onsubmit="register(event)">
-      <fieldset>
-      <legend>R Form</legend>
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="username" required>
-        <br>
+    <div class="page">
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
-        <br>
+        <div class="top">
+            <!-- SIDEBAR -->
+            <div class="sidebar">
+                <a href="index.html">
+                    <img src="photos/AF.jpg" alt="USAFA Logo" class="logo">
+                </a>
 
-        <label for="password">Password:</label>
-        <input type="password" id="password" name="password" required>
-        <br>
+                <div class="departments">
+                    <p class="departments-title">Departments</p>
 
-        <label for="role">Role:</label>
-        <select id="role" name="role" required>
-            <option value="user">User</option>
-            <option value="admin">Admin</option>
-        </select>
-        <br>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Aeronautics">Aeronautics</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Astronautics">Astronautics</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Behavioral Sciences and Leadership">Behavioral Sciences & Leadership</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Biology">Biology</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Chemistry">Chemistry</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Civil and Environmental Engineering">Civil & Environmental Engineering</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Computer and Cyber Sciences">Computer & Cyber Sciences</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Economics and Geosciences">Economics & Geosciences</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Electrical and Computer Engineering">Electrical & Computer Engineering</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="English and Fine Arts">English & Fine Arts</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="History">History</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Languages and Cultures">Languages & Cultures</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Law">Law</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Management">Management</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Mathematical Sciences">Mathematical Sciences</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Mechanical Engineering">Mechanical Engineering</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Military and Strategic Studies">Military & Strategic Studies</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Philosophy">Philosophy</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Physics and Meteorology">Physics & Meteorology</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Political Science">Political Science</button>
+                    </form>
+                    <form action="/search" method="post">
+                        <button type="submit" name="query" value="Systems Engineering">Systems Engineering</button>
+                    </form>
+                </div>
+            </div>
 
-        <button type="submit">Register</button>
-      </fieldset>
-    </form>
-    <hr>
+            <!-- CENTER -->
+            <div class="header-title">
+                <h1>Register</h1>
+
+                <form id="register-form" class="login" onsubmit="registerUser(event)">
+                    <label for="username">Username:</label>
+                    <br>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
+                    <br>
+
+                    <label for="email">Email:</label>
+                    <br>
+                    <input type="email" id="email" name="email" placeholder="Enter email" required>
+                    <br>
+
+                    <label for="password">Password:</label>
+                    <br>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
+                    <br>
+
+                    <label for="role">Role:</label>
+                    <br>
+                    <select id="role" name="role">
+                        <option value="user">User</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <br><br>
+
+                    <button type="submit">Register</button>
+                </form>
+            </div>
+
+            <!-- RIGHT -->
+            <div class="top-links">
+                <div id="user-status"></div>
+                <span>|</span>
+                <a href="about.html">About</a>
+                <img src="photos/user.png" alt="Default profile picture" class="contact-avatar">
+            </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <a href="contact.html">Contact Us</a>
+        </div>
+    </div>
+
+    <script defer src="loginStatus.js"></script>
+    <script defer src="register.js"></script>
 </body>
 </html>
-

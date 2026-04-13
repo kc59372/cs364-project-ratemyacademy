@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="responsive.css">
 </head>
 
+<script defer src="login.js"></script>
+
 <body>
     <div class="page">
 
@@ -93,34 +95,31 @@
             <!-- CENTER -->
             <div class="header-title">
                 <h1>Login</h1>
-                <form class="login" action="index.html">
-                    <label>
-                        Username:
-                    </label>
+            
+                <form id="login-form" class="login" onsubmit="login(event)">
+                    <label for="username">Username:</label>
                     <br>
-                    <input type="text" id="username" name="username" 
-                            placeholder="Enter username" required>
+                    <input type="text" id="username" name="username" placeholder="Enter username" required>
                     <br>
-                    <label>
-                        Password:
-                    </label>
+            
+                    <label for="password">Password:</label>
                     <br>
-                    <input type="text" id="password" name="password" 
-                            placeholder="Enter password" required>
+                    <input type="password" id="password" name="password" placeholder="Enter password" required>
                     <br>
-                    <button type="submit">Submit</button>
+            
+                    <button type="submit">Login</button>
                 </form>
-
-
+            
+                <p>Need an account? <a href="register.html">Create one here</a></p>
             </div>
 
             <!-- RIGHT -->
             <div class="top-links">
-                <a href="login.html">Login</a>
+                <div id="user-status"></div>
+                <span>|</span>
                 <a href="about.html">About</a>
                 <img src="photos/user.png" alt="Default profile picture" class="contact-avatar">
             </div>
-
         </div>
 
         <!-- FOOTER -->
@@ -129,5 +128,7 @@
         </div>
 
     </div>
+
+<script defer src="loginStatus.js"></script>
 </body>
 </html>

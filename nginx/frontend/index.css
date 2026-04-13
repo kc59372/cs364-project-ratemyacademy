@@ -83,6 +83,10 @@ h1, h2, h3 {
 /* TOP RIGHT */
 .top-links {
     padding: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    flex-wrap: nowrap;
 }
 
 .top-links a {

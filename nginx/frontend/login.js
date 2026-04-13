@@ -2,31 +2,34 @@
 // used by login.html to log a user in
 
 async function login(event) {
-    event.preventDefault(); // Prevent form from submitting the default way
+    event.preventDefault();
 
     const formData = new FormData(document.getElementById("login-form"));
     const loginData = {
         username: formData.get("username"),
         password: formData.get("password")
     };
-    console.log(loginData);
 
     try {
         const response = await fetch("/api/login", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
+            credentials: "include",
             body: JSON.stringify(loginData)
         });
 
         const result = await response.json();
 
         if (response.ok) {
-            // Redirect to the frontpage on successful login
-            alert("user is logged in");
-            window.location.href = "frontpage.html";
+            alert("Logged in successfully");
+
+            if (result.role === "admin") {
+                window.location.href = "dashboard.html";
+            } else {
+                window.location.href = "index.html";
+            }
         } else {
-            // Show an alert box if login fails
-            alert(result.error || "Login failed. Please try again." || `${user}`);
+            alert(result.message || "Login failed");
         }
     } catch (error) {
         console.error("Error during login:", error);

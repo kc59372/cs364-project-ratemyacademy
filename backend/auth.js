@@ -19,14 +19,18 @@ async function login(req, res) {
   console.log(`auth login username ${username}`);
   console.log(`auth login password ${password}`);
   const user = (await db.query("SELECT * FROM users WHERE username = $1", [username])).rows[0];
-  if (!user) return res.status(401).json({ message: "Login failUre" });
+  if (!user) return res.status(401).json({ message: "Login failure" });
 
   const hash = crypto.pbkdf2Sync(password, user.salt, numHashIterations, hashLength, "sha512").toString("hex");
   if (hash !== user.hash) return res.status(401).json({ message: "Login fAilure"});
 
   console.log(`making session: ${user.username}, ${user.role}`);
-  req.session.user = { username: user.username, role: user.role };
-  res.json({ message: "Logged in" });
+  req.session.user = {id: user.id, username: user.username, role: user.role };
+  res.json({
+    message: "Logged in",
+    role: user.role,
+    username: user.username
+  });
 }
 
 async function register(req, res) {
