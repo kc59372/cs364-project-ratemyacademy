@@ -6,54 +6,69 @@
     <title>Admin Dashboard</title>
     <script defer src="dashboard.js"></script>
     <script defer src="loadnavbar.js"> </script>
-    <script defer src="loginStatus.js"> </script>
-    <script defer src="register.js"></script>
     <link rel="stylesheet" href="website.css">
 </head>
 
 <body>
     <nav class="navbar"> <div id="navbar-placeholder"> nav bar placeholder </div> </nav>
     <h2>Admin Dashboard</h2>
-
-    <p> example of what admin dashboard could look like </p>
     <table border="1">
         <thead>
             <tr>
-                <th>Username</th>
-                <th>Email</th>
-                <th>Role</th>
+                <th>Course ID</th>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Department ID</th>
             </tr>
         </thead>
-        <tbody id="userList"></tbody>
+        <tbody id="course-table-body">
+
+        </tbody>
     </table>
 
     <div class="header-title">
 
         <!-- KEEP THIS EXACTLY -->
-        <form id="register-form" onsubmit="register(event)">
+        <form id="insert-course" onsubmit="insertCourse(event)">
             <fieldset>
-                <legend>Insert new user</legend>
+                <legend>Insert new course</legend>
 
-                <label for="name">Username:</label>
-                <input type="text" id="name" name="username" required>
+                <label for="course_id">Course ID:</label>
+                <input type="number" id="course_id" name="course_id" required>
                 <br>
 
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+                <label for="course_code">Course Code:</label>
+                <input type="text" id="course_code" name="course_code" required>
                 <br>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+                <label for="course_name">Course Name:</label>
+                <input type="text" id="course_name" name="course_name" required>
                 <br>
 
-                <label for="role">Role:</label>
-                <select id="role" name="role" required>
-                    <option value="user">User</option>
-                    <option value="admin">Admin</option>
-                </select>
-                <br><br>
+                <label for="d_id">Department ID:</label>
+                <input type="number" id="d_id" name="d_id" required>
+                <br>
 
-                <button type="submit">Register</button>
+
+                <button type="submit">Insert</button>
+            </fieldset>
+        </form>
+
+        <form id="row-limit" onsubmit="displayRows(event)">
+            <fieldset>
+                <legend>Display Rows</legend>
+                <label for="row_limit">Rows to Display:</label>
+                <input type="number" id="row_limit" name="row_limit" placeholder="10" required>
+                <br>
+                <button type="submit">Display</button>
+            </fieldset>
+        </form>
+
+        <form id="truncate" onsubmit="truncateTable(event)">
+            <fieldset>
+                <legend>Truncate Table</legend>
+                <p>WARNING! This action can not be undone!</p>
+                <button type="submit">Truncate</button>
             </fieldset>
         </form>
     </div>

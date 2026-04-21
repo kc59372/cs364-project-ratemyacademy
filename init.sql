@@ -141,7 +141,7 @@ INSERT INTO course VALUES
 
 INSERT INTO users (username, email, hash, salt, role, first_name, last_name, squadron_number, class_year, account_created_date) VALUES
 ('hannah.davis', 'c27hannah.davis@afacademy.af.edu', 'hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1', 'salt1salt1salt1salt1', 'user', 'Hannah', 'Davis', 18, 27, '03/11/2026'),
-('will.lockhart', 'c27guy.lockhart@afacademy.af.edu', 'hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2', 'salt2salt2salt2salt2', 'user', 'Will', 'Lockhart', 16, 27, '03/11/2026'),
+('will.lockhart', 'c27guy.lockhart@afacademy.af.edu', 'hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2hash2', 'salt2salt2salt2salt2', 'admin', 'Will', 'Lockhart', 16, 27, '03/11/2026'),
 ('kaci.mcbrayer', 'c27kaci.mcbrayer@afacademy.af.edu', 'hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3', 'salt3salt3salt3salt3', 'user', 'Kaci', 'Mcbrayer', 11, 27, '03/11/2026');
 
 INSERT INTO section VALUES

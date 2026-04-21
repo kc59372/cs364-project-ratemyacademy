@@ -1,27 +1,84 @@
-//file: dashboard.js
-// used by dashboard.html to fetch users from the database
-// and udpate HTML table with user data
+async function loadCourses(limit) {
+    try {
+        const response = await fetch("/api/admin/course/display?limit=" + limit);
+        const courses = await response.json();
 
-async function fetchUsers() {
-    const response = await fetch("/api/users", { credentials: "include" });
-    const users = await response.json();
+        const tableBody = document.getElementById("course-table-body");
+        tableBody.innerHTML = ""; // clear existing rows
 
-    if (response.ok) {
-        // get HTML table (going to add returned values to the table)
-        const userTable = document.getElementById("userList");
-        userTable.innerHTML = ""; // clear the previous content of the table
-
-        // for each user in result, create table row and append to table in DOM
-        users.forEach(user => {  
+        courses.forEach(course => {
             const row = document.createElement("tr");
-            row.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.role}</td>`;
-            userTable.appendChild(row);
+
+            row.innerHTML = `
+                <td>${course.course_id}</td>
+                <td>${course.course_code}</td>
+                <td>${course.course_name}</td>
+                <td>${course.d_id}</td>
+            `;
+
+            tableBody.appendChild(row);
         });
 
-    } else {
-        alert("Unauthorized access! - remove this alert from dashboard.js (line:18) when 'done'"); // comment this out when confident
-        window.location.href = "/frontpage.html";
+    } catch (error) {
+        console.error("Error loading courses:", error);
     }
 }
 
-fetchUsers();
+async function insertCourse(event) {
+    event.preventDefault();
+
+    let form = document.getElementById("insert-course");
+    let formData = {};
+    for (let i = 0; i < form.elements.length; i++) {
+        let element = form.elements[i];
+        if (element.type !== "submit") {
+            formData[element.name] = element.value;
+        }
+    }
+    let jsonData = JSON.stringify(formData);
+
+    const response = await fetch("/api/admin/course/insert", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: jsonData
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+        alert(result.message);
+        loadCourses();
+    } else {
+        alert(result.message);
+    }
+}
+
+async function displayRows(event) {
+    event.preventDefault();
+
+    let form = document.getElementById("row-limit");
+    let formData = {};
+    for (let i = 0; i < form.elements.length; i++) {
+        let element = form.elements[i];
+        if (element.type !== "submit") {
+            formData[element.name] = element.value;
+        }
+    }
+
+    loadCourses(formData.row_limit);
+}
+
+async function truncateTable(event) {
+    event.preventDefault();
+    const response = await fetch("/api/admin/course/truncate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include"
+    });
+    const courses = await response.json();
+    loadCourses(10);
+}
+
+// Run when page loads
+window.onload = () => loadCourses(10);
