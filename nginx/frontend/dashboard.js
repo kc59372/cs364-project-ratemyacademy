@@ -17,6 +17,12 @@ async function loadCourses(limit) {
             `;
 
             tableBody.appendChild(row);
+            
+            const rows = tableBody.querySelectorAll("tr");
+
+            rows.forEach((row, index) => {
+                row.style.backgroundColor = index % 2 === 0 ? "#ffffff" : "#f2f2f2";
+            });
         });
 
     } catch (error) {
