@@ -126,4 +126,94 @@ app.post("/api/reviews", async (req, res) => {
   }
 });
 
+// CREATE COURSE TABLE
+app.post("/api/admin/course/create", auth.ensureAdmin, async (req, res) => {
+  try {
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS course (
+        course_id INT PRIMARY KEY,
+        course_code VARCHAR(20) NOT NULL,
+        course_name VARCHAR(120) NOT NULL,
+        d_id INT,
+        CONSTRAINT fk_course_department
+          FOREIGN KEY (d_id)
+          REFERENCES department(department_id)
+      );
+    `);
+
+    res.json({ success: true, message: "Course table created (if not exists)" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Error creating course table" });
+  }
+});
+
+// DISPLAY DATA IN COURSE TABLE (LIMITED ROWS)
+app.get("/api/admin/course/display", auth.ensureAdmin, async (req, res) => {
+  const limit = parseInt(req.query.limit) || 10;
+
+  try {
+    const result = await pool.query(
+      "SELECT * FROM course ORDER BY course_id LIMIT $1",
+      [limit]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Error fetching courses" });
+  }
+});
+
+// TRUNCATE COURSE TABLE
+app.post("/api/admin/course/truncate", auth.ensureAdmin, async (req, res) => {
+  try {
+    await pool.query("TRUNCATE TABLE course RESTART IDENTITY CASCADE");
+    res.json({ success: true, message: "Course table truncated" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Error truncating table" });
+  }
+});
+
+// INSERT TEST ROW INTO COURSE TABLE
+app.post("/api/admin/course/insert", auth.ensureAdmin, async (req, res) => {
+  const { course_id, course_code, course_name, d_id } = req.body;
+
+  if (!course_id || !course_code || !course_name) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required fields"
+    });
+  }
+
+  try {
+    const query = `
+      INSERT INTO course (course_id, course_code, course_name, d_id)
+      VALUES ($1, $2, $3, $4)
+    `;
+
+    const values = [course_id, course_code, course_name, d_id];
+
+    await pool.query(query, values);
+
+    res.json({ success: true, message: "Course inserted" });
+
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Insert failed" });
+  }
+});
+
+// DROP COURSE TABLE
+app.post("/api/admin/course/drop", auth.ensureAdmin, async (req, res) => {
+  try {
+    await pool.query("DROP TABLE IF EXISTS course CASCADE");
+    res.json({ success: true, message: "Course table dropped" });
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Error dropping table" });
+  }
+});
+
 app.listen(3000, () => console.log("Server running on port 3000"));
