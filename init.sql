@@ -53,17 +53,18 @@ CREATE TABLE IF NOT EXISTS section (
 
 CREATE TABLE IF NOT EXISTS review (
     review_id INT PRIMARY KEY,
-    rating INT,
+    department VARCHAR(80),
+    course_id VARCHAR(20),
+    instructor_first_name VARCHAR(20),
+    instructor_last_name VARCHAR(30),
+    reviewer_first_name VARCHAR(20),
+    reviewer_last_name VARCHAR(30),
+    creation_date DATE,
     comment VARCHAR(1000),
-    creation_date VARCHAR(10),
     user_id INT,
-    section_id INT,
     CONSTRAINT fk_users
         FOREIGN KEY (user_id)
-        REFERENCES users(id),
-    CONSTRAINT fk_section
-        FOREIGN KEY (section_id)
-        REFERENCES section(section_id)
+        REFERENCES users(id)
 );
 
 INSERT INTO department VALUES
@@ -149,10 +150,30 @@ INSERT INTO section VALUES
 (2, 9, 9),
 (3, 10, 10);
 
-INSERT INTO review VALUES
-(1, 10, 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages.', '03/11/2026', 1, 1),
-(2, 10, 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.', '03/11/2026', 2, 2),
-(3, 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.', '03/11/2026', 3, 3);
+-- changed the inserts because changed the review structure to match the cards
+INSERT INTO review (
+    review_id,
+    department,
+    course_id,
+    instructor_first_name,
+    instructor_last_name,
+    reviewer_first_name,
+    reviewer_last_name,
+    creation_date,
+    comment,
+    user_id
+) VALUES
+(1, 'Computer and Cyber Sciences', 'Comp Sci 330', 'Dennis', 'Bouvier', 'Hannah', 'Davis', '2026-03-11',
+ 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages.',
+ 1),
+
+(2, 'Computer and Cyber Sciences', 'Comp Sci 364', 'Claire', 'Badger', 'Will', 'Lockhart', '2026-03-11',
+ 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.',
+ 2),
+
+(3, 'Computer and Cyber Sciences', 'Cyber Sci 435', 'Jason', 'McGinthy', 'Kaci', 'Mcbrayer', '2026-03-11',
+ 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.',
+ 3);
 
 SELECT * FROM users;
-
+SELECT * FROM review;

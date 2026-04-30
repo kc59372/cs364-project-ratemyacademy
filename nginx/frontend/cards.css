@@ -59,3 +59,38 @@
     font-size: 14px;
     line-height: 1.5;
 }
+
+/* WRITE REVIEW CSS — reuse card styling */
+
+.write-review-btn {
+    margin-top: 16px;
+    padding: 8px 12px;
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+}
+
+/* make form card behave exactly like normal cards */
+.review-form-card {
+    width: 420px; /* only difference from normal card */
+}
+
+/* form layout */
+.review-form-card form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* inputs match card text */
+.review-form-card input,
+.review-form-card textarea {
+    padding: 8px;
+    font-size: 14px;
+    font-family: Inter, sans-serif;
+    border: 1px solid #d0d5dd;
+    border-radius: 6px;
+}
+
+.review-form-card textarea {
+    min-height: 120px;
+}

@@ -1,10 +1,8 @@
-<!--MAIN PAGE-->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Main</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
+    <title>Write Review</title>
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="sidebar.css">
     <link rel="stylesheet" href="cards.css">
@@ -17,14 +15,12 @@
         <!-- TOP SECTION -->
         <div class="top">
 
-            <!-- SIDEBAR (LEFT) -->
+            <!-- SIDEBAR -->
             <div class="sidebar">
-                <!-- button to reload main page -->
                 <a href="index.html">
                     <img src="photos/AF.jpg" alt="USAFA Logo" class="logo">
                 </a>
 
-                <!-- department list -->
                 <div class="departments">
                     <p class="departments-title">Departments</p>
                 
@@ -92,61 +88,49 @@
                         <button type="submit" name="query" value="Systems Engineering">Systems Engineering</button>
                     </form>
                 </div>
+                
             </div>
 
             <!-- CENTER -->
             <div class="header-title">
-                <h1>Rate My Academy</h1>
-                <p class="subtitle">- A database-driven web application that helps USAFA cadets evaluate </p>
-                <p class="subtitle">courses and professors through peer reviews. -</p>
+                <h1>Write a Review</h1>
 
-                <form class="search-bar" action="/search" method="post">
-                <input
-                    type="text"
-                    name="query"
-                    placeholder="Search by Department, Class, or Instructor..."
-                >
-                </form>
+                <div class="card review-form-card">
+                    <form id="review-form">
 
-                <div class="reviews-section">
-                    <h2>Recent Reviews</h2>
+                        <label>Department</label>
+                        <input type="text" id="department" required>
 
-                    <div class="card-container">
-                        <div class="card">
-                            <div class="card-title">Comp Sci 330</div>
-                            <div class="card-subtitle">Software Design and Development</div>
-                            <div class="card-meta">
-                                <span>Instructor: Dennis Bouvier</span>
-                                <span>Reviewer: Hannah Davis</span>
-                                <span>Date: 03/11/2026</span>
-                            </div>
-                            <div class="card-text">Very fun class, great teacher, even if he does say so himself. 
-                            Readings aren't long, only 6 pages max. Make sure you do them. 
-                            Would definetly recommend as an elective for non Comp Sci majors wishing 
-                            to expand their scope of programming languages.</div>
-                        </div>
+                        <label>Course ID</label>
+                        <input type="text" id="course_id" required>
 
-                        <div class="card">
-                            <div class="card-title">Comp Sci 364</div>
-                            <div class="card-subtitle">Databases and Applications</div>
-                            <div class="card-meta">
-                                <span>Instructor: Claire Badger</span>
-                                <span>Reviewer: Will Lockhart</span>
-                                <span>Date: 03/11/2026</span>
-                            </div>
-                            <div class="card-text">Not done with the class, but so far so good. Instructor 
-                            is great even though I have only had her infrequently as she 
-                            was subbing. Do the readings.</div>
-                        </div>
-                    </div>
+                        <label>Instructor First Name</label>
+                        <input type="text" id="instructor_first_name" required>
+
+                        <label>Instructor Last Name</label>
+                        <input type="text" id="instructor_last_name" required>
+
+                        <label>Reviewer First Name</label>
+                        <input type="text" id="reviewer_first_name" required>
+
+                        <label>Reviewer Last Name</label>
+                        <input type="text" id="reviewer_last_name" required>
+
+                        <!-- documentation: https://www.w3schools.com/TAGS/att_input_type_date.asp -->
+                        <label>Date</label>
+                        <input type="date" id="creation_date" required>
+
+                        <label>Written Review</label>
+                        <textarea id="comment" maxlength="1000" required></textarea>
+
+                        <button type="submit" class="write-review-btn">Submit Review</button>
+                    </form>
+
+                    <p id="review-message"></p>
                 </div>
-                
-                <button id="write-review-btn" class="write-review-btn">Write a Review</button>
-
             </div>
 
             <!-- TOP RIGHT -->
-            <!-- button to About page -->
             <div class="top-links">
                 <div id="user-status"></div>
                 <span>|</span>
@@ -158,23 +142,13 @@
 
         <!-- FOOTER -->
         <div class="footer">
-            <!-- button to Contact page -->
             <a href="contact.html">Contact Us</a>
         </div>
 
     </div>
 
-<script>
-    window.addEventListener("pageshow", function () {
-        document.querySelector(".search-bar input").value = "";
-    });
-</script>
-
-<!-- to display user status -->
-<script defer src="loginStatus.js"></script>
-
-<!-- to write a review -->
-<script src="writeReviewButton.js"></script>
+    <script defer src="loginStatus.js"></script>
+    <script src="write-review.js"></script>
 
 </body>
 </html>
