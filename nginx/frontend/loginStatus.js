@@ -17,11 +17,11 @@ async function checkLoginStatus() {
         if (data.loggedIn) {
             userStatus.innerHTML = `
                 Logged in as: <strong>${data.user.username}</strong>
-                | <a href="logout.html">Logout</a>
+                <a href="logout.html">Logout</a>
             `;
         } else {
             userStatus.innerHTML = `
-                <a href="login.html">Login</a> |
+                <a href="login.html">Login</a>
                 <a href="register.html">Register</a>
             `;
         }

@@ -1,75 +1,64 @@
-/* SIDEBAR STYLESHEET */
 .sidebar {
-    width: 200px;
-    background-color: #0b3d91;
-    color: white;
-    padding: 20px;
+    width: 240px;
+    min-width: 220px;
+    background: linear-gradient(180deg, #0b3d91 0%, #0a356f 100%);
+    color: #ffffff;
+    padding: 28px 20px;
     display: flex;
     flex-direction: column;
+    gap: 26px;
+    border-radius: 28px;
 }
 
 .logo {
-    width: 120px;  
-    margin-bottom: 20px;
+    width: 100%;
+    max-width: 160px;
+    margin: 0 auto;
     display: block;
-    margin-left: auto;
-    margin-right: auto; 
     transition: transform 0.2s ease;
 }
 
 .logo:hover {
-    transform: scale(1.08);
+    transform: scale(1.04);
 }
 
 .departments-title {
-    font-size: 13px;
+    margin: 0 0 12px;
+    font-size: 0.82rem;
     text-transform: uppercase;
-    margin-bottom: 10px;
-    opacity: 0.8;
-    letter-spacing: 1px;
+    letter-spacing: 1.3px;
+    opacity: 0.9;
 }
 
 .sidebar form {
     margin: 0;
 }
 
-.sidebar button {
+.sidebar button,
+.sidebar p a {
     width: 100%;
-    margin-bottom: 8px;
-    padding: 10px;
+    margin-bottom: 10px;
+    padding: 12px 16px;
     border: none;
-    border-radius: 6px;
-    background-color: white;
-    color: #0b3d91;
-    font-weight: 500;
-    cursor: pointer;
-    transition: all 0.2s ease;
+    border-radius: 14px;
+    background-color: rgba(255, 255, 255, 0.12);
+    color: #ffffff;
+    font-weight: 600;
+    text-align: left;
+    transition: transform 0.2s ease, background-color 0.2s ease;
     box-sizing: border-box;
 }
 
-.sidebar button:hover {
-    background-color: #dbe6ff;
+.sidebar button:hover,
+.sidebar p a:hover {
+    background-color: rgba(255, 255, 255, 0.22);
     transform: translateX(3px);
 }
 
 .sidebar p {
-    margin: 0 0 8px;
+    margin: 0;
 }
 
 .sidebar p a {
     display: block;
-    width: 100%;
-    padding: 10px;
-    border-radius: 6px;
-    background-color: white;
-    color: #0b3d91;
-    font-weight: 500;
-    text-decoration: none;
-    transition: all 0.2s ease;
-    box-sizing: border-box;
-}
-
-.sidebar p a:hover {
-    background-color: #dbe6ff;
-    transform: translateX(3px);
 }

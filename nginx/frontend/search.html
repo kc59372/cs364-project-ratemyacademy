@@ -4,7 +4,6 @@
 <head>
     <meta charset="utf-8">
     <title>Search Reviews</title>
-    <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
     <link rel="stylesheet" href="sidebar.css">
@@ -12,18 +11,98 @@
     <link rel="stylesheet" href="responsive.css">
 </head>
 <body>
-    <div class="page-container">
-        <div class="header-title">
-            <h1>Search Reviews</h1>
-            <p class="subtitle">Search by department, class, or instructor.</p>
-            <form id="search-form" class="search-bar" action="/search.html" method="get">
-                <input id="search-input" type="text" name="query" placeholder="Search by Department, Class, or Instructor..." autocomplete="off">
-                <button type="submit">Search</button>
-            </form>
-            <div id="search-message" class="search-message">Enter a search term to begin.</div>
-        </div>
+    <div class="page">
+        <div class="top">
+            <div class="sidebar">
+                <a href="index.html">
+                    <img src="photos/AF.jpg" alt="USAFA Logo" class="logo">
+                </a>
 
-        <div id="search-results" class="card-container"></div>
+                <div class="departments">
+                    <p class="departments-title">Departments</p>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Aeronautics">Aeronautics</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Astronautics">Astronautics</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Behavioral Sciences and Leadership">Behavioral Sciences & Leadership</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Biology">Biology</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Chemistry">Chemistry</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Civil and Environmental Engineering">Civil & Environmental Engineering</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Computer and Cyber Sciences">Computer & Cyber Sciences</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Economics and Geosciences">Economics & Geosciences</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Electrical and Computer Engineering">Electrical & Computer Engineering</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="English and Fine Arts">English & Fine Arts</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="History">History</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Languages and Cultures">Languages & Cultures</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Law">Law</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Management">Management</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Mathematical Sciences">Mathematical Sciences</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Mechanical Engineering">Mechanical Engineering</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Military and Strategic Studies">Military & Strategic Studies</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Philosophy">Philosophy</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Physics and Meteorology">Physics & Meteorology</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Political Science">Political Science</button>
+                    </form>
+                    <form action="/search.html" method="get">
+                        <button type="submit" name="query" value="Systems Engineering">Systems Engineering</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="header-title">
+                <h1>Search Reviews</h1>
+                <p class="subtitle">Search by department, class, or instructor.</p>
+                <form id="search-form" class="search-bar" action="/search.html" method="get">
+                    <input id="search-input" type="text" name="query" placeholder="Search by Department, Class, or Instructor..." autocomplete="off">
+                    <button type="submit">Search</button>
+                </form>
+                <div id="search-message" class="search-message">Enter a search term to begin.</div>
+                <div id="search-results" class="card-container"></div>
+            </div>
+
+            <div class="top-links">
+                <img src="photos/user.png" alt="Default profile picture" class="contact-avatar">
+                <div id="user-status"></div>
+                <a href="about.html">About</a>
+            </div>
+        </div>
 
         <div class="footer">
             <a href="index.html">Home</a> |

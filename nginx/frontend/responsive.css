@@ -1,22 +1,78 @@
-/* RESPONSIVE STYLESHEET */
-@media (max-width: 800px) {
+@media (max-width: 1120px) {
     .top {
-        flex-direction: column;
+        gap: 18px;
+        padding: 22px;
     }
 
     .sidebar {
-        width: 100%;
-        flex-direction: row;
-        overflow-x: auto;
+        min-width: 0;
+        border-radius: 22px;
+    }
+}
+
+@media (max-width: 900px) {
+    .top {
+        flex-direction: column;
+        align-items: stretch;
     }
 
-    .sidebar button {
-        margin-right: 8px;
-        white-space: nowrap;
+    .top-links {
+        order: 3;
+        width: 100%;
+        max-width: none;
+        justify-content: flex-start;
+        margin-top: 0;
+    }
+
+    .sidebar {
+        order: 2;
+        width: 100%;
+        min-width: 0;
+    }
+
+    .header-title {
+        order: 1;
+    }
+
+    .card-container {
+        grid-template-columns: 1fr;
     }
 
     .card,
-    .contact-card {
+    .contact-card,
+    .review-form-card,
+    fieldset {
         width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    body {
+        padding-top: 0;
+    }
+
+    .top {
+        padding: 18px 16px;
+    }
+
+    .navbar {
+        position: static;
+        height: auto;
+        padding: 18px 16px;
+    }
+
+    .search-bar input,
+    .review-form-card input,
+    .review-form-card textarea,
+    .login input,
+    input[type=text],
+    input[type=email],
+    input[type=password],
+    select {
+        font-size: 1rem;
+    }
+
+    .top-links {
+        gap: 10px;
     }
 }
