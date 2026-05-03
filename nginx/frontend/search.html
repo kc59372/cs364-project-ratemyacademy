@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Search</title>
+    <title>Search Reviews</title>
     <link rel="stylesheet" href="index.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="index.css">
@@ -11,5 +11,28 @@
     <link rel="stylesheet" href="cards.css">
     <link rel="stylesheet" href="responsive.css">
 </head>
+<body>
+    <div class="page-container">
+        <div class="header-title">
+            <h1>Search Reviews</h1>
+            <p class="subtitle">Search by department, class, or instructor.</p>
+            <form id="search-form" class="search-bar" action="/search.html" method="get">
+                <input id="search-input" type="text" name="query" placeholder="Search by Department, Class, or Instructor..." autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+            <div id="search-message" class="search-message">Enter a search term to begin.</div>
+        </div>
 
-<!-- make center of page (center grid) scroll and keep sides frozen-->
+        <div id="search-results" class="card-container"></div>
+
+        <div class="footer">
+            <a href="index.html">Home</a> |
+            <a href="about.html">About</a> |
+            <a href="contact.html">Contact</a>
+        </div>
+    </div>
+
+    <script defer src="loginStatus.js"></script>
+    <script defer src="search.js"></script>
+</body>
+</html>

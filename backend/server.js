@@ -184,8 +184,55 @@ app.post("/api/admin/course/drop", auth.ensureAdmin, async (req, res) => {
   }
 });
 
-app.listen(3000, () => console.log("Server running on port 3000"));
+app.get("/api/search", async (req, res) => {
+  const queryText = (req.query.q || req.query.query || "").trim();
 
+  try {
+    let result;
+
+    if (!queryText) {
+      result = await pool.query(
+        `SELECT review_id, department, course_id, instructor_first_name, instructor_last_name, reviewer_first_name, reviewer_last_name, creation_date, comment
+         FROM review
+         ORDER BY creation_date DESC
+         LIMIT 20`
+      );
+    } else {
+      const searchTerm = `%${queryText}%`;
+      result = await pool.query(
+        `SELECT
+           r.review_id,
+           r.rating,
+           r.comment,
+           r.creation_date,
+           c.course_code,
+           c.course_name,
+           d.department_name,
+           p.first_name AS instructor_first_name,
+           p.last_name AS instructor_last_name
+         FROM review r
+         LEFT JOIN section s ON r.section_id = s.section_id
+         LEFT JOIN course c ON s.course_id = c.course_id
+         LEFT JOIN professor p ON s.professor_id = p.professor_id
+         LEFT JOIN department d ON c.d_id = d.department_id
+         WHERE d.department_name ILIKE $1
+            OR c.course_code ILIKE $1
+            OR c.course_name ILIKE $1
+            OR p.first_name ILIKE $1
+            OR p.last_name ILIKE $1
+            OR (p.first_name || ' ' || p.last_name) ILIKE $1
+         ORDER BY r.creation_date DESC
+         LIMIT 50`,
+        [searchTerm]
+      );
+    }
+
+    res.json(result.rows);
+  } catch (err) {
+    console.log("Error searching reviews:", err);
+    res.status(500).json({ success: false, message: "Error searching reviews" });
+  }
+});
 
 // reviews route
 app.post("/api/reviews", async (req, res) => {
@@ -271,3 +318,5 @@ app.post("/api/reviews", async (req, res) => {
     res.status(500).json({ success: false, message: "Error creating review" });
   }
 });
+
+app.listen(3000, () => console.log("Server running on port 3000"));
