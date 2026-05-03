@@ -45,6 +45,10 @@ app.post("/api/register", async (req, res) => {
   console.log("server.js: register ");
   const { username, email, password, role } = req.body;
 
+  if (!username || !email || !password || !role) {
+    return res.status(400).json({ success: false, message: "Missing required fields" });
+  }
+
   console.log(`server.js: register username: ${username}`);
   console.log(`server.js: register email: ${email}`);
   console.log(`server.js: register password: ${password}`);

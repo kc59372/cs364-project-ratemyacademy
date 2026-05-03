@@ -16,6 +16,10 @@ const saltLength = 16;
 
 async function login(req, res) {
   const { username, password } = req.body;
+  if (!username || !password) {
+    return res.status(400).json({ message: "Missing username or password" });
+  }
+
   console.log(`auth login username ${username}`);
   console.log(`auth login password ${password}`);
   const user = (await db.query("SELECT * FROM users WHERE username = $1", [username])).rows[0];
