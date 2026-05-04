@@ -26,6 +26,7 @@ document.getElementById("review-form").addEventListener("submit", async function
         reviewer_first_name: document.getElementById("reviewer_first_name").value,
         reviewer_last_name: document.getElementById("reviewer_last_name").value,
         creation_date: document.getElementById("creation_date").value,
+        rating: document.getElementById("rating").value,
         comment: document.getElementById("comment").value
     };
 

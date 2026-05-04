@@ -196,8 +196,26 @@ app.get("/api/search", async (req, res) => {
 
     if (!queryText) {
       result = await pool.query(
-        `SELECT review_id, department, course_id, instructor_first_name, instructor_last_name, reviewer_first_name, reviewer_last_name, creation_date, comment
-         FROM review
+        // `SELECT review_id, department, course_id, instructor_first_name, instructor_last_name, reviewer_first_name, reviewer_last_name, creation_date, comment
+        //  FROM review
+        //  ORDER BY creation_date DESC
+        //  LIMIT 20`
+        `SELECT 
+            review.review_id, 
+            review.department, 
+            review.course_id, 
+            professor.first_name AS instructor_first_name,
+            professor.last_name AS instructor_last_name,
+            review.reviewer_first_name, 
+            review.reviewer_last_name, 
+            review.creation_date, 
+            review.rating,
+            review.comment, 
+            course.course_code, 
+            course.course_name
+         FROM review 
+         LEFT JOIN course ON review.course_id = course.course_id
+         LEFT JOIN professor ON review.professor_id = professor.professor_id
          ORDER BY creation_date DESC
          LIMIT 20`
       );
@@ -215,10 +233,9 @@ app.get("/api/search", async (req, res) => {
            p.first_name AS instructor_first_name,
            p.last_name AS instructor_last_name
          FROM review r
-         LEFT JOIN section s ON r.section_id = s.section_id
-         LEFT JOIN course c ON s.course_id = c.course_id
-         LEFT JOIN professor p ON s.professor_id = p.professor_id
-         LEFT JOIN department d ON c.d_id = d.department_id
+          LEFT JOIN course c ON r.course_id = c.course_id
+          LEFT JOIN professor p ON r.professor_id = p.professor_id
+          LEFT JOIN department d ON c.d_id = d.department_id
          WHERE d.department_name ILIKE $1
             OR c.course_code ILIKE $1
             OR c.course_name ILIKE $1
@@ -229,6 +246,30 @@ app.get("/api/search", async (req, res) => {
          LIMIT 50`,
         [searchTerm]
       );
+      // result = await pool.query(
+      //   `SELECT
+      //      r.review_id,
+      //      r.rating,
+      //      r.comment,
+      //      r.creation_date,
+      //      c.course_code,
+      //      c.course_name,
+      //      d.department_name,
+      //      r.first_name AS instructor_first_name,
+      //      r.last_name AS instructor_last_name
+      //    FROM review r
+      //    LEFT JOIN course c ON r.course_id = c.course_id
+      //    LEFT JOIN department d ON c.d_id = d.department_id
+      //    WHERE d.department_name ILIKE $1
+      //       OR c.course_code ILIKE $1
+      //       OR c.course_name ILIKE $1
+      //       OR r.first_name ILIKE $1
+      //       OR r.last_name ILIKE $1
+      //       OR (r.first_name || ' ' || r.last_name) ILIKE $1
+      //    ORDER BY r.creation_date DESC
+      //    LIMIT 50`,
+      //   [searchTerm]
+      // );
     }
 
     res.json(result.rows);
@@ -254,6 +295,7 @@ app.post("/api/reviews", async (req, res) => {
     reviewer_first_name,
     reviewer_last_name,
     creation_date,
+    rating,
     comment
   } = req.body;
 
@@ -267,6 +309,7 @@ app.post("/api/reviews", async (req, res) => {
     !reviewer_first_name ||
     !reviewer_last_name ||
     !creation_date ||
+    !rating ||
     !comment
   ) {
     return res.status(400).json({ success: false, message: "Missing required fields" });
@@ -279,16 +322,36 @@ app.post("/api/reviews", async (req, res) => {
 
     const next_review_id = maxResult.rows[0].max_id + 1;
 
+    const prequery = `
+      SELECT professor_id
+      FROM professor
+      WHERE first_name ILIKE $1
+        AND last_name ILIKE $2
+      LIMIT 1
+
+    `;
+    
+    const professorResult = await pool.query(prequery, [
+      instructor_first_name,
+      instructor_last_name
+    ]);
+
+    if (professorResult.rows.length === 0) {
+      return res.status(400).json({ success: false, message: "Professor not found" });
+    }
+    
+    const professor_id = professorResult.rows[0].professor_id;
+
     const query = `
       INSERT INTO review (
         review_id,
         department,
         course_id,
-        instructor_first_name,
-        instructor_last_name,
+        professor_id,
         reviewer_first_name,
         reviewer_last_name,
         creation_date,
+        rating,
         comment,
         user_id
       )
@@ -300,11 +363,11 @@ app.post("/api/reviews", async (req, res) => {
       next_review_id,
       department,
       course_id,
-      instructor_first_name,
-      instructor_last_name,
+      professor_id,
       reviewer_first_name,
       reviewer_last_name,
       creation_date,
+      rating,
       comment,
       user_id
     ];

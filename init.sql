@@ -54,12 +54,12 @@ CREATE TABLE IF NOT EXISTS section (
 CREATE TABLE IF NOT EXISTS review (
     review_id INT PRIMARY KEY,
     department VARCHAR(80),
-    course_id VARCHAR(20),
-    instructor_first_name VARCHAR(20),
-    instructor_last_name VARCHAR(30),
+    course_id INT,
+    professor_id INT,
     reviewer_first_name VARCHAR(20),
     reviewer_last_name VARCHAR(30),
     creation_date DATE,
+    rating INT,
     comment VARCHAR(1000),
     user_id INT,
     CONSTRAINT fk_users
@@ -155,23 +155,23 @@ INSERT INTO review (
     review_id,
     department,
     course_id,
-    instructor_first_name,
-    instructor_last_name,
+    professor_id,
     reviewer_first_name,
     reviewer_last_name,
     creation_date,
+    rating,
     comment,
     user_id
 ) VALUES
-(1, 'Computer and Cyber Sciences', 'Comp Sci 330', 'Dennis', 'Bouvier', 'Hannah', 'Davis', '2026-03-11',
+(1, 'Computer and Cyber Sciences', 8, 8, 'Hannah', 'Davis', '2026-03-11', 10,
  'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages.',
  1),
 
-(2, 'Computer and Cyber Sciences', 'Comp Sci 364', 'Claire', 'Badger', 'Will', 'Lockhart', '2026-03-11',
+(2, 'Computer and Cyber Sciences', 9, 9, 'Will', 'Lockhart', '2026-03-11', 10,
  'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.',
  2),
 
-(3, 'Computer and Cyber Sciences', 'Cyber Sci 435', 'Jason', 'McGinthy', 'Kaci', 'Mcbrayer', '2026-03-11',
+(3, 'Computer and Cyber Sciences', 10, 10, 'Kaci', 'Mcbrayer', '2026-03-11', 10,
  'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.',
  3);
 
