@@ -19,17 +19,11 @@ document.getElementById("review-form").addEventListener("submit", async function
     event.preventDefault();
 
     const reviewData = {
-        department: document.getElementById("department").value,
-        course_id: document.getElementById("course_id").value,
-        instructor_first_name: document.getElementById("instructor_first_name").value,
-        instructor_last_name: document.getElementById("instructor_last_name").value,
-        reviewer_first_name: document.getElementById("reviewer_first_name").value,
-        reviewer_last_name: document.getElementById("reviewer_last_name").value,
-        creation_date: document.getElementById("creation_date").value,
+        section_id: document.getElementById("section_id").value,
         rating: document.getElementById("rating").value,
         comment: document.getElementById("comment").value
     };
-
+    
     const response = await fetch("/api/reviews", {
         method: "POST",
         headers: {

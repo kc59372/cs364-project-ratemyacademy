@@ -20,10 +20,10 @@ CREATE TABLE IF NOT EXISTS department (
 );
 
 CREATE TABLE IF NOT EXISTS professor (
-    professor_id INT PRIMARY KEY,
+    professor_id INT PRIMARY KEY
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
-    d_id INT,
+    d_id INT NOT NULL,
     CONSTRAINT fk_professor_department
         FOREIGN KEY (d_id)
         REFERENCES department(department_id)
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS course (
     course_id INT PRIMARY KEY,
     course_code VARCHAR(20) NOT NULL,
     course_name VARCHAR(120) NOT NULL,
-    d_id INT,
+    d_id INT NOT NULL,
     CONSTRAINT fk_course_department
         FOREIGN KEY (d_id)
         REFERENCES department(department_id)
@@ -41,8 +41,8 @@ CREATE TABLE IF NOT EXISTS course (
 
 CREATE TABLE IF NOT EXISTS section (
     section_id INT PRIMARY KEY,
-    course_id INT,
-    professor_id INT,
+    course_id INT NOT NULL,
+    professor_id INT NOT NULL,
     CONSTRAINT fk_professor
         FOREIGN KEY (professor_id)
         REFERENCES professor(professor_id),
@@ -52,19 +52,15 @@ CREATE TABLE IF NOT EXISTS section (
 );
 
 CREATE TABLE IF NOT EXISTS review (
-    review_id INT PRIMARY KEY,
-    department VARCHAR(80),
-    course_id INT,
-    professor_id INT,
-    reviewer_first_name VARCHAR(20),
-    reviewer_last_name VARCHAR(30),
-    creation_date DATE,
-    rating INT,
+    review_id SERIAL PRIMARY KEY,
+    section_id INT NOT NULL,
+    user_id INT NOT NULL,
+    creation_date DATE DEFAULT CURRENT_DATE,
+    rating INT CHECK (rating BETWEEN 1 AND 10),
     comment VARCHAR(1000),
-    user_id INT,
-    CONSTRAINT fk_users
-        FOREIGN KEY (user_id)
-        REFERENCES users(id)
+
+    FOREIGN KEY (section_id) REFERENCES section(section_id),
+    FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 INSERT INTO department VALUES
@@ -151,29 +147,10 @@ INSERT INTO section VALUES
 (3, 10, 10);
 
 -- changed the inserts because changed the review structure to match the cards
-INSERT INTO review (
-    review_id,
-    department,
-    course_id,
-    professor_id,
-    reviewer_first_name,
-    reviewer_last_name,
-    creation_date,
-    rating,
-    comment,
-    user_id
-) VALUES
-(1, 'Computer and Cyber Sciences', 8, 8, 'Hannah', 'Davis', '2026-03-11', 10,
- 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages.',
- 1),
-
-(2, 'Computer and Cyber Sciences', 9, 9, 'Will', 'Lockhart', '2026-03-11', 10,
- 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.',
- 2),
-
-(3, 'Computer and Cyber Sciences', 10, 10, 'Kaci', 'Mcbrayer', '2026-03-11', 10,
- 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.',
- 3);
+INSERT INTO review (section_id, user_id, creation_date, rating, comment) VALUES
+(1, 1, '2026-03-11', 10, 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages'),
+(2, 2, '2026-03-11', 10, 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.'),
+(3, 3, '2026-03-11', 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.');
 
 SELECT * FROM users;
 SELECT * FROM review;

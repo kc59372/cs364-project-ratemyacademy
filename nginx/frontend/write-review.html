@@ -97,31 +97,16 @@
 
                 <div class="card review-form-card">
                     <form id="review-form">
-
-                        <label>Department</label>
-                        <input type="text" id="department" required>
-
-                        <label>Course ID</label>
-                        <input type="text" id="course_id" required>
-
-                        <label>Instructor First Name</label>
-                        <input type="text" id="instructor_first_name" required>
-
-                        <label>Instructor Last Name</label>
-                        <input type="text" id="instructor_last_name" required>
-
-                        <label>Reviewer First Name</label>
-                        <input type="text" id="reviewer_first_name" required>
-
-                        <label>Reviewer Last Name</label>
-                        <input type="text" id="reviewer_last_name" required>
-
-                        <!-- documentation: https://www.w3schools.com/TAGS/att_input_type_date.asp -->
-                        <label>Date</label>
-                        <input type="date" id="creation_date" required>
+                        <label>Course / Instructor</label>
+                        <select id="section_id" required>
+                            <option value="">Select a course</option>
+                            <option value="1">Comp Sci 330 - Software Design and Development - Dennis Bouvier</option>
+                            <option value="2">Comp Sci 364 - Databases and Applications - Claire Badger</option>
+                            <option value="3">Cyber Sci 435 - Cyber Operations - Jason McGinthy</option>
+                        </select>
 
                         <label>Rating (1-10)</label>
-                        <input type="text" id="rating" required>
+                        <input type="number" id="rating" min="1" max="10" required>
 
                         <label>Written Review</label>
                         <textarea id="comment" maxlength="1000" required></textarea>

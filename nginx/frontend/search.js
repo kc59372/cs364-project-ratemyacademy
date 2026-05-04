@@ -21,7 +21,7 @@ function renderReviewCard(review) {
       <div class="card-title">${escapeHtml(review.course_code || "Unknown Course")}</div>
       <div class="card-subtitle">${escapeHtml(review.course_name || "No course name")}</div>
       <div class="card-meta">
-        <span>Department: ${escapeHtml(review.department_name || "Unknown")}</span>
+        <span>Department: ${escapeHtml(review.department || "Unknown")}</span>
         <span>Instructor: ${escapeHtml(review.instructor_first_name || "")} ${escapeHtml(review.instructor_last_name || "")}</span>
         <span>Date: ${escapeHtml(review.creation_date || "")}</span>
         <span>Rating: ${escapeHtml(review.rating != null ? review.rating : "N/A")}</span>

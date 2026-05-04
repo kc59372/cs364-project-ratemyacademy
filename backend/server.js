@@ -194,82 +194,50 @@ app.get("/api/search", async (req, res) => {
   try {
     let result;
 
+    const baseQuery = `
+      SELECT
+        r.review_id,
+        r.rating,
+        r.comment,
+        r.creation_date,
+        c.course_code,
+        c.course_name,
+        d.department_name AS department,
+        p.first_name AS instructor_first_name,
+        p.last_name AS instructor_last_name,
+        u.first_name AS reviewer_first_name,
+        u.last_name AS reviewer_last_name
+      FROM review r
+      JOIN section s ON r.section_id = s.section_id
+      JOIN course c ON s.course_id = c.course_id
+      JOIN professor p ON s.professor_id = p.professor_id
+      JOIN department d ON c.d_id = d.department_id
+      JOIN users u ON r.user_id = u.id
+    `;
+
     if (!queryText) {
-      result = await pool.query(
-        // `SELECT review_id, department, course_id, instructor_first_name, instructor_last_name, reviewer_first_name, reviewer_last_name, creation_date, comment
-        //  FROM review
-        //  ORDER BY creation_date DESC
-        //  LIMIT 20`
-        `SELECT 
-            review.review_id, 
-            review.department, 
-            review.course_id, 
-            professor.first_name AS instructor_first_name,
-            professor.last_name AS instructor_last_name,
-            review.reviewer_first_name, 
-            review.reviewer_last_name, 
-            review.creation_date, 
-            review.rating,
-            review.comment, 
-            course.course_code, 
-            course.course_name
-         FROM review 
-         LEFT JOIN course ON review.course_id = course.course_id
-         LEFT JOIN professor ON review.professor_id = professor.professor_id
-         ORDER BY creation_date DESC
-         LIMIT 20`
-      );
+      result = await pool.query(`
+        ${baseQuery}
+        ORDER BY r.creation_date DESC
+        LIMIT 20
+      `);
     } else {
       const searchTerm = `%${queryText}%`;
+
       result = await pool.query(
-        `SELECT
-           r.review_id,
-           r.rating,
-           r.comment,
-           r.creation_date,
-           c.course_code,
-           c.course_name,
-           d.department_name,
-           p.first_name AS instructor_first_name,
-           p.last_name AS instructor_last_name
-         FROM review r
-          LEFT JOIN course c ON r.course_id = c.course_id
-          LEFT JOIN professor p ON r.professor_id = p.professor_id
-          LEFT JOIN department d ON c.d_id = d.department_id
-         WHERE d.department_name ILIKE $1
-            OR c.course_code ILIKE $1
-            OR c.course_name ILIKE $1
-            OR p.first_name ILIKE $1
-            OR p.last_name ILIKE $1
-            OR (p.first_name || ' ' || p.last_name) ILIKE $1
-         ORDER BY r.creation_date DESC
-         LIMIT 50`,
+        `
+        ${baseQuery}
+        WHERE d.department_name ILIKE $1
+           OR c.course_code ILIKE $1
+           OR c.course_name ILIKE $1
+           OR p.first_name ILIKE $1
+           OR p.last_name ILIKE $1
+           OR (p.first_name || ' ' || p.last_name) ILIKE $1
+        ORDER BY r.creation_date DESC
+        LIMIT 50
+        `,
         [searchTerm]
       );
-      // result = await pool.query(
-      //   `SELECT
-      //      r.review_id,
-      //      r.rating,
-      //      r.comment,
-      //      r.creation_date,
-      //      c.course_code,
-      //      c.course_name,
-      //      d.department_name,
-      //      r.first_name AS instructor_first_name,
-      //      r.last_name AS instructor_last_name
-      //    FROM review r
-      //    LEFT JOIN course c ON r.course_id = c.course_id
-      //    LEFT JOIN department d ON c.d_id = d.department_id
-      //    WHERE d.department_name ILIKE $1
-      //       OR c.course_code ILIKE $1
-      //       OR c.course_name ILIKE $1
-      //       OR r.first_name ILIKE $1
-      //       OR r.last_name ILIKE $1
-      //       OR (r.first_name || ' ' || r.last_name) ILIKE $1
-      //    ORDER BY r.creation_date DESC
-      //    LIMIT 50`,
-      //   [searchTerm]
-      // );
     }
 
     res.json(result.rows);
@@ -287,90 +255,21 @@ app.post("/api/reviews", async (req, res) => {
     return res.status(401).json({ success: false, message: "Not logged in" });
   }
 
-  const {
-    department,
-    course_id,
-    instructor_first_name,
-    instructor_last_name,
-    reviewer_first_name,
-    reviewer_last_name,
-    creation_date,
-    rating,
-    comment
-  } = req.body;
-
+  const { section_id, rating, comment } = req.body;
   const user_id = req.session.user.id;
 
-  if (
-    !department ||
-    !course_id ||
-    !instructor_first_name ||
-    !instructor_last_name ||
-    !reviewer_first_name ||
-    !reviewer_last_name ||
-    !creation_date ||
-    !rating ||
-    !comment
-  ) {
+  if (!section_id || !rating || !comment) {
     return res.status(400).json({ success: false, message: "Missing required fields" });
   }
 
   try {
-    const maxResult = await pool.query(
-      "SELECT COALESCE(MAX(review_id), 0) as max_id FROM review"
-    );
-
-    const next_review_id = maxResult.rows[0].max_id + 1;
-
-    const prequery = `
-      SELECT professor_id
-      FROM professor
-      WHERE first_name ILIKE $1
-        AND last_name ILIKE $2
-      LIMIT 1
-
-    `;
-    
-    const professorResult = await pool.query(prequery, [
-      instructor_first_name,
-      instructor_last_name
-    ]);
-
-    if (professorResult.rows.length === 0) {
-      return res.status(400).json({ success: false, message: "Professor not found" });
-    }
-    
-    const professor_id = professorResult.rows[0].professor_id;
-
     const query = `
-      INSERT INTO review (
-        review_id,
-        department,
-        course_id,
-        professor_id,
-        reviewer_first_name,
-        reviewer_last_name,
-        creation_date,
-        rating,
-        comment,
-        user_id
-      )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      INSERT INTO review (section_id, user_id, rating, comment)
+      VALUES ($1, $2, $3, $4)
       RETURNING review_id
     `;
 
-    const values = [
-      next_review_id,
-      department,
-      course_id,
-      professor_id,
-      reviewer_first_name,
-      reviewer_last_name,
-      creation_date,
-      rating,
-      comment,
-      user_id
-    ];
+    const values = [section_id, user_id, rating, comment];
 
     const result = await pool.query(query, values);
 
