@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS department (
 );
 
 CREATE TABLE IF NOT EXISTS professor (
-    professor_id INT PRIMARY KEY
+    professor_id INT PRIMARY KEY,
     first_name VARCHAR(20) NOT NULL,
     last_name VARCHAR(30) NOT NULL,
     d_id INT NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS professor (
 );
 
 CREATE TABLE IF NOT EXISTS course (
-    course_id INT PRIMARY KEY,
+    course_id SERIAL PRIMARY KEY,
     course_code VARCHAR(20) NOT NULL,
     course_name VARCHAR(120) NOT NULL,
     d_id INT NOT NULL,
@@ -111,30 +111,30 @@ INSERT INTO professor VALUES
 (22, 'Paul', 'Bezerra', 20),
 (23, 'Gretchen', 'Gaskins', 21);
 
-INSERT INTO course VALUES
-(1, 'Biology 330', 'Zoology', 1),
-(2, 'Chem 233', 'Organic Chemistry I', 2),
-(3, 'Math 142', 'Calculus II', 3),
-(4, 'Physics 264', 'Modern Physics', 4),
-(5, 'Aero Engr 342', 'Computational Aerodynamics', 5),
-(6, 'Astr Engr 321', 'Intermediate Astrodynamics', 6),
-(7, 'Civ Engr 361', 'Fundamental Hydraulics', 7),
-(8, 'Comp Sci 330', 'Software Design and Development', 8),
-(9, 'Comp Sci 364', 'Databases and Applications', 8),
-(10, 'Cyber Sci 435', 'Cyber Operations', 8),
-(11, 'ECE 281', 'Digital Design and Computer Architecture', 9),
-(12, 'Mech Engr 312', 'Thermodynamics', 10),
-(13, 'Sys Engr 311', 'Model Based Systems Engineering', 11),
-(14, 'Arabic 131', 'Basic Arabic', 12),
-(15, 'English 370', 'Special Topics in War and Literature', 13),
-(16, 'History 300', 'World History', 14),
-(17, 'Philos 320', 'Ethics and Technology', 15),
-(18, 'Beh Sci 345', 'The Psychology of Learning', 16),
-(19, 'Econ 201', 'Introduction to Economics', 17),
-(20, 'Law 463', 'Law of War', 18),
-(21, 'Mgt 341', 'Financial Accounting', 19),
-(22, 'MSS 444', 'Space and Cyber Strategy for National Security', 20),
-(23, 'Pol Sci 301', 'Political Theory', 21);
+INSERT INTO course (course_code, course_name, d_id) VALUES
+('Biology 330', 'Zoology', 1),
+('Chem 233', 'Organic Chemistry I', 2),
+('Math 142', 'Calculus II', 3),
+('Physics 264', 'Modern Physics', 4),
+('Aero Engr 342', 'Computational Aerodynamics', 5),
+('Astr Engr 321', 'Intermediate Astrodynamics', 6),
+('Civ Engr 361', 'Fundamental Hydraulics', 7),
+('Comp Sci 330', 'Software Design and Development', 8),
+('Comp Sci 364', 'Databases and Applications', 8),
+('Cyber Sci 435', 'Cyber Operations', 8),
+('ECE 281', 'Digital Design and Computer Architecture', 9),
+('Mech Engr 312', 'Thermodynamics', 10),
+('Sys Engr 311', 'Model Based Systems Engineering', 11),
+('Arabic 131', 'Basic Arabic', 12),
+('English 370', 'Special Topics in War and Literature', 13),
+('History 300', 'World History', 14),
+('Philos 320', 'Ethics and Technology', 15),
+('Beh Sci 345', 'The Psychology of Learning', 16),
+('Econ 201', 'Introduction to Economics', 17),
+('Law 463', 'Law of War', 18),
+('Mgt 341', 'Financial Accounting', 19),
+('MSS 444', 'Space and Cyber Strategy for National Security', 20),
+('Pol Sci 301', 'Political Theory', 21);
 
 INSERT INTO users (username, email, hash, salt, role, first_name, last_name, squadron_number, class_year, account_created_date) VALUES
 ('hannah.davis', 'c27hannah.davis@afacademy.af.edu', 'hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1hash1', 'salt1salt1salt1salt1', 'user', 'Hannah', 'Davis', 18, 27, '03/11/2026'),
@@ -142,15 +142,35 @@ INSERT INTO users (username, email, hash, salt, role, first_name, last_name, squ
 ('kaci.mcbrayer', 'c27kaci.mcbrayer@afacademy.af.edu', 'hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3hash3', 'salt3salt3salt3salt3', 'user', 'Kaci', 'Mcbrayer', 11, 27, '03/11/2026');
 
 INSERT INTO section VALUES
-(1, 8, 8),
-(2, 9, 9),
-(3, 10, 10);
+(1, (SELECT course_id FROM course WHERE course_code = 'Biology 330'), 1),
+(2, (SELECT course_id FROM course WHERE course_code = 'Chem 233'), 2),
+(3, (SELECT course_id FROM course WHERE course_code = 'Math 142'), 3),
+(4, (SELECT course_id FROM course WHERE course_code = 'Physics 264'), 4),
+(5, (SELECT course_id FROM course WHERE course_code = 'Aero Engr 342'), 5),
+(6, (SELECT course_id FROM course WHERE course_code = 'Astr Engr 321'), 6),
+(7, (SELECT course_id FROM course WHERE course_code = 'Civ Engr 361'), 7),
+(8, (SELECT course_id FROM course WHERE course_code = 'Comp Sci 330'), 8),
+(9, (SELECT course_id FROM course WHERE course_code = 'Comp Sci 364'), 9),
+(10, (SELECT course_id FROM course WHERE course_code = 'Cyber Sci 435'), 10),
+(11, (SELECT course_id FROM course WHERE course_code = 'ECE 281'), 11),
+(12, (SELECT course_id FROM course WHERE course_code = 'Mech Engr 312'), 12),
+(13, (SELECT course_id FROM course WHERE course_code = 'Sys Engr 311'), 13),
+(14, (SELECT course_id FROM course WHERE course_code = 'Arabic 131'), 14),
+(15, (SELECT course_id FROM course WHERE course_code = 'English 370'), 15),
+(16, (SELECT course_id FROM course WHERE course_code = 'History 300'), 16),
+(17, (SELECT course_id FROM course WHERE course_code = 'Philos 320'), 17),
+(18, (SELECT course_id FROM course WHERE course_code = 'Beh Sci 345'), 18),
+(19, (SELECT course_id FROM course WHERE course_code = 'Econ 201'), 19),
+(20, (SELECT course_id FROM course WHERE course_code = 'Law 463'), 20),
+(21, (SELECT course_id FROM course WHERE course_code = 'Mgt 341'), 21),
+(22, (SELECT course_id FROM course WHERE course_code = 'MSS 444'), 22),
+(23, (SELECT course_id FROM course WHERE course_code = 'Pol Sci 301'), 23);
 
 -- changed the inserts because changed the review structure to match the cards
 INSERT INTO review (section_id, user_id, creation_date, rating, comment) VALUES
-(1, 1, '2026-03-11', 10, 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages'),
-(2, 2, '2026-03-11', 10, 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.'),
-(3, 3, '2026-03-11', 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.');
+(8, 1, '2026-03-11', 10, 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages'),
+(9, 2, '2026-03-11', 10, 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.'),
+(10, 3, '2026-03-11', 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.');
 
 SELECT * FROM users;
 SELECT * FROM review;

@@ -103,7 +103,7 @@ app.post("/api/admin/course/create", auth.ensureAdmin, async (req, res) => {
   try {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS course (
-        course_id INT PRIMARY KEY,
+        course_id SERIAL PRIMARY KEY,
         course_code VARCHAR(20) NOT NULL,
         course_name VARCHAR(120) NOT NULL,
         d_id INT,
@@ -150,9 +150,9 @@ app.post("/api/admin/course/truncate", auth.ensureAdmin, async (req, res) => {
 
 // INSERT TEST ROW INTO COURSE TABLE
 app.post("/api/admin/course/insert", auth.ensureAdmin, async (req, res) => {
-  const { course_id, course_code, course_name, d_id } = req.body;
+  const { course_code, course_name, d_id } = req.body;
 
-  if (!course_id || !course_code || !course_name) {
+  if (!course_code || !course_name) {
     return res.status(400).json({
       success: false,
       message: "Missing required fields"
@@ -161,11 +161,11 @@ app.post("/api/admin/course/insert", auth.ensureAdmin, async (req, res) => {
 
   try {
     const query = `
-      INSERT INTO course (course_id, course_code, course_name, d_id)
-      VALUES ($1, $2, $3, $4)
+      INSERT INTO course (course_code, course_name, d_id)
+      VALUES ($1, $2, $3)
     `;
 
-    const values = [course_id, course_code, course_name, d_id];
+    const values = [course_code, course_name, d_id];
 
     await pool.query(query, values);
 
@@ -282,6 +282,31 @@ app.post("/api/reviews", async (req, res) => {
   } catch (error) {
     console.log("Error creating review:", error);
     res.status(500).json({ success: false, message: "Error creating review" });
+  }
+});
+
+
+app.get("/api/sections", async (req, res) => {
+  
+  try {
+    const result = await pool.query(
+      `SELECT
+        s.section_id,
+        c.course_code,
+        c.course_name,
+        p.first_name AS instructor_first_name,
+        p.last_name AS instructor_last_name
+      FROM section s
+      JOIN course c ON s.course_id = c.course_id
+      JOIN professor p ON s.professor_id = p.professor_id
+      ORDER BY c.course_code;
+      `      
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json({ success: false, message: "Error fetching sections" });
   }
 });
 

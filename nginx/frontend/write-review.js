@@ -43,3 +43,27 @@ document.getElementById("review-form").addEventListener("submit", async function
         message.textContent = data.message || "Error submitting review.";
     }
 });
+
+async function displaySections(){
+    try {
+        const response = await fetch("/api/sections");
+        const sections = await response.json();
+
+        const options = document.getElementById("section_id");
+
+        sections.forEach(section => {
+            const option = document.createElement("option");
+            
+            option.value = section.section_id;
+            option.textContent = `${section.course_code} - ${section.course_name} - ${section.instructor_first_name} ${section.instructor_last_name}`;
+
+            options.appendChild(option);
+        });
+
+
+    } catch (error) {
+        console.error("Error loading sections:", error);
+    }
+}
+
+window.addEventListener("DOMContentLoaded", displaySections);
