@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS professor (
 
 CREATE TABLE IF NOT EXISTS course (
     course_id SERIAL PRIMARY KEY,
-    course_code VARCHAR(20) NOT NULL UNIQUE,
+    course_code VARCHAR(20) NOT NULL,
     course_name VARCHAR(120) NOT NULL,
     d_id INT NOT NULL,
     CONSTRAINT fk_course_department
