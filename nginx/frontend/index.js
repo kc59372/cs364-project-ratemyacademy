@@ -5,7 +5,10 @@ async function displayReviews(){
         const reviews = await response.json();
 
         const cardContainer = document.getElementById("display-reviews");
-        cardContainer.innerHTML = reviews.map(renderReviewCard).join("");
+        cardContainer.innerHTML = reviews
+            .slice(0, 6)
+            .map(renderReviewCard)
+            .join("");
 
 
     } catch (error) {

@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS professor (
 
 CREATE TABLE IF NOT EXISTS course (
     course_id SERIAL PRIMARY KEY,
-    course_code VARCHAR(20) NOT NULL,
+    course_code VARCHAR(20) NOT NULL UNIQUE,
     course_name VARCHAR(120) NOT NULL,
     d_id INT NOT NULL,
     CONSTRAINT fk_course_department
@@ -170,7 +170,28 @@ INSERT INTO section VALUES
 INSERT INTO review (section_id, user_id, creation_date, rating, comment) VALUES
 (8, 1, '2026-03-11', 10, 'Very fun class, great teacher, even if he does say so himself. Readings are not long, only 6 pages max. Make sure you do them. Would definitely recommend as an elective for non Comp Sci majors wishing to expand their scope of programming languages'),
 (9, 2, '2026-03-11', 10, 'Not done with the class, but so far so good. Instructor is great even though I have only had her infrequently as she was subbing. Do the readings.'),
-(10, 3, '2026-03-11', 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.');
+(10, 3, '2026-03-11', 10, 'As I am writing this I have not taken this class or heard anything about it. Instructor is great though.'),
+(1, 2, '2026-03-12', 8, 'Interesting material and labs are engaging, but requires consistent studying to keep up.'),
+(2, 3, '2026-03-12', 7, 'Challenging course with heavy memorization. Professor explains well but pace is fast.'),
+(3, 1, '2026-03-12', 9, 'Well-structured and clear instruction. Homework is tough but prepares you well for exams.'),
+(4, 2, '2026-03-12', 8, 'Concepts are difficult but rewarding. Lectures are solid if you stay focused.'),
+(5, 3, '2026-03-12', 9, 'Very technical but extremely interesting. Great for anyone considering aero as a major.'),
+(6, 1, '2026-03-12', 9, 'Challenging math but fascinating applications. Instructor is passionate and helpful.'),
+(7, 2, '2026-03-12', 8, 'Practical and useful material. Workload is manageable with good time management.'),
+(11, 3, '2026-03-12', 7, 'Labs can be time-consuming, but you learn a lot. Definitely not an easy A.'),
+(12, 1, '2026-03-12', 8, 'Thermo is tough but rewarding. Expect to put in consistent effort.'),
+(13, 2, '2026-03-12', 9, 'Very applicable to real-world problems. Group projects are meaningful.'),
+(14, 3, '2026-03-12', 10, 'Fun and interactive class. Great environment for learning a new language.'),
+(15, 1, '2026-03-12', 9, 'Engaging discussions and interesting readings. Workload is reasonable.'),
+(16, 2, '2026-03-12', 8, 'Lots of reading but lectures tie everything together well.'),
+(17, 3, '2026-03-12', 9, 'Makes you think critically. Discussions are the best part of the course.'),
+(18, 1, '2026-03-12', 10, 'Very relevant and interesting. Material is easy to connect to real life.'),
+(19, 2, '2026-03-12', 8, 'Good intro course. Concepts are straightforward if you keep up with lectures.'), 
+(20, 3, '2026-03-12', 9, 'Super interesting content. Instructor brings real-world experience into class.'),
+(21, 1, '2026-03-12', 8, 'Useful for future leadership roles. Group work is a big component.'),
+(22, 2, '2026-03-12', 10, 'One of the most interesting classes offered. Great discussions on strategy.'),
+(23, 3, '2026-03-12', 9, 'Thought-provoking material and strong classroom discussions.');
+-- added ChatGPT generated example reviews to create representative database
 
 SELECT * FROM users;
 SELECT * FROM review;
